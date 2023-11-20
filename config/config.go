@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"regexp"
 	"strconv"
@@ -62,17 +61,13 @@ func GetUintWithDefault(key string, fallback uint) uint {
 
 func MustGetFloat32(key string) float32 {
 	value := must.Must(strconv.ParseFloat(os.Getenv(key), 32))
-	if math.IsNaN(value) {
-		err := fmt.Errorf("env value by key '%s' should not be NaN", key)
-		panic(err)
-	}
 
 	return float32(value)
 }
 
 func GetFloat32WithDefault(key string, fallback float32) float32 {
 	value, err := strconv.ParseFloat(os.Getenv(key), 32)
-	if err != nil || math.IsNaN(value) {
+	if err != nil {
 		return fallback
 	}
 
@@ -81,17 +76,13 @@ func GetFloat32WithDefault(key string, fallback float32) float32 {
 
 func MustGetFloat64(key string) float64 {
 	value := must.Must(strconv.ParseFloat(os.Getenv(key), 64))
-	if math.IsNaN(value) {
-		err := fmt.Errorf("env value by key '%s' should not be NaN", key)
-		panic(err)
-	}
 
 	return value
 }
 
 func GetFloat64WithDefault(key string, fallback float64) float64 {
 	value, err := strconv.ParseFloat(os.Getenv(key), 64)
-	if err != nil || math.IsNaN(value) {
+	if err != nil {
 		return fallback
 	}
 

@@ -471,24 +471,6 @@ func TestMustGetFloat32(t *testing.T) {
 		assert.Equal(t, float32(math.MaxFloat32), value)
 	})
 
-	t.Run("invalid: value is nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_INVALID_FLOAT32")
-		})
-	})
-
-	t.Run("invalid: value is math.nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "math.NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_INVALID_FLOAT32")
-		})
-	})
-
 	t.Run("invalid: value is string", func(t *testing.T) {
 		os.Setenv("TEST_INVALID_FLOAT32", "not_a_float32")
 		defer os.Unsetenv("TEST_INVALID_FLOAT32")
@@ -559,24 +541,6 @@ func TestGetFloat32WithDefault(t *testing.T) {
 		value := GetFloat32WithDefault("TEST_VALID_FLOAT32", 5.0)
 
 		assert.Equal(t, float32(math.MaxFloat32), value)
-	})
-
-	t.Run("invalid: value is nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		value := GetFloat32WithDefault("TEST_INVALID_FLOAT32", 5.0)
-
-		assert.Equal(t, float32(5.0), value)
-	})
-
-	t.Run("invalid: value is math.nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "math.NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		value := GetFloat32WithDefault("TEST_INVALID_FLOAT32", 5.0)
-
-		assert.Equal(t, float32(5.0), value)
 	})
 
 	t.Run("invalid: value is string", func(t *testing.T) {
@@ -651,24 +615,6 @@ func TestMustGetFloat64(t *testing.T) {
 		assert.Equal(t, float64(math.MaxFloat64), value)
 	})
 
-	t.Run("invalid: value is nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT64", "NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT64")
-
-		assert.Panics(t, func() {
-			MustGetFloat64("TEST_INVALID_FLOAT64")
-		})
-	})
-
-	t.Run("invalid: value is math.nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT64", "math.NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT64")
-
-		assert.Panics(t, func() {
-			MustGetFloat64("TEST_INVALID_FLOAT64")
-		})
-	})
-
 	t.Run("invalid: value is string", func(t *testing.T) {
 		os.Setenv("TEST_INVALID_FLOAT64", "not_a_float64")
 		defer os.Unsetenv("TEST_INVALID_FLOAT64")
@@ -739,24 +685,6 @@ func TestGetFloat64WithDefault(t *testing.T) {
 		value := GetFloat64WithDefault("TEST_VALID_FLOAT64", 5.0)
 
 		assert.Equal(t, float64(math.MaxFloat64), value)
-	})
-
-	t.Run("invalid: value is nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT64", "NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT64")
-
-		value := GetFloat64WithDefault("TEST_INVALID_FLOAT64", 5.0)
-
-		assert.Equal(t, float64(5.0), value)
-	})
-
-	t.Run("invalid: value is math.nan", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT64", "math.NaN")
-		defer os.Unsetenv("TEST_INVALID_FLOAT64")
-
-		value := GetFloat64WithDefault("TEST_INVALID_FLOAT64", 5.0)
-
-		assert.Equal(t, float64(5.0), value)
 	})
 
 	t.Run("invalid: value is string", func(t *testing.T) {
