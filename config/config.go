@@ -11,8 +11,6 @@ import (
 	"github.com/4rchr4y/gdk/must"
 )
 
-// string---------------------------------------------------
-
 func MustGetString(key string) string {
 	value, ok := os.LookupEnv(key)
 	if !ok {
@@ -32,8 +30,6 @@ func GetStringWithDefault(key string, fallback string) string {
 	return value
 }
 
-// int---------------------------------------------------
-
 func MustGetInt(key string) int {
 	value := must.Must(strconv.Atoi(os.Getenv(key)))
 
@@ -49,8 +45,6 @@ func GetIntWithDefault(key string, fallback int) int {
 	return value
 }
 
-// uint---------------------------------------------------
-
 func MustGetUint(key string) uint {
 	value := must.Must(strconv.ParseUint(os.Getenv(key), 10, 64))
 
@@ -65,8 +59,6 @@ func GetUintWithDefault(key string, fallback uint) uint {
 
 	return uint(value)
 }
-
-// float32---------------------------------------------------
 
 func MustGetFloat32(key string) float32 {
 	value := must.Must(strconv.ParseFloat(os.Getenv(key), 32))
@@ -87,8 +79,6 @@ func GetFloat32WithDefault(key string, fallback float32) float32 {
 	return float32(value)
 }
 
-// float64---------------------------------------------------
-
 func MustGetFloat64(key string) float64 {
 	value := must.Must(strconv.ParseFloat(os.Getenv(key), 64))
 	if math.IsNaN(value) {
@@ -107,8 +97,6 @@ func GetFloat64WithDefault(key string, fallback float64) float64 {
 
 	return value
 }
-
-// url---------------------------------------------------
 
 func MustGetUrl(key string) string {
 	pattern := `^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/|\/|\/\/)?[A-z0-9_-]*?[:]?[A-z0-9_-]*?[@]?[A-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$`
@@ -135,8 +123,6 @@ func GetUrlWithDefault(key string, fallback string) string {
 
 	return value
 }
-
-// time.Duration---------------------------------------------------
 
 func MustGetDuration(key string) time.Duration {
 	value, err := time.ParseDuration(os.Getenv(key))
