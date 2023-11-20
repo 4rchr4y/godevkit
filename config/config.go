@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
@@ -10,18 +11,29 @@ import (
 	"github.com/4rchr4y/gdk/must"
 )
 
+func requireEnvVar(key string) (string, error) {
+	value, ok := os.LookupEnv(key)
+	if !ok {
+		return "", errors.New("") // TODO: set err message
+	}
+
+	return value, nil
+}
+
 func MustGetInt(key string) int         { return must.Must(strconv.Atoi(os.Getenv(key))) }
 func MustGetUint(key string) uint64     { return must.Must(strconv.ParseUint(os.Getenv(key), 10, 64)) }
 func MustGetFloat64(key string) float64 { return must.Must(strconv.ParseFloat(os.Getenv(key), 64)) }
-func MustGetString(key string) string {
-	value, ok := os.LookupEnv(key)
-	if !ok {
-		err := fmt.Errorf("environment variable '%s' not found", key)
-		panic(err)
-	}
+func MustGetString(key string) string   { return must.Must(requireEnvVar(key)) }
 
-	return value
-}
+// func MustGetString(key string) string {
+// 	value, ok := os.LookupEnv(key)
+// 	if !ok {
+// 		err := fmt.Errorf(""environment variable '%s' not found", key)
+// 		panic(err)
+// 	}
+
+// 	return value
+// }
 
 func GetStringWithDefault(key string, fallback string) string {
 	// TODO: use MustBeOk
@@ -97,7 +109,6 @@ func GetUrlWithDefault(key string, fallback string) string {
 
 func MustGetDuration(key string) time.Duration {
 	value, err := time.ParseDuration(os.Getenv(key))
-
 	must.Must(value, err)
 
 	return value
