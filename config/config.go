@@ -10,6 +10,9 @@ import (
 	"github.com/4rchr4y/gdk/must"
 )
 
+func MustGetInt(key string) int         { return must.Must(strconv.Atoi(os.Getenv(key))) }
+func MustGetUint(key string) uint64     { return must.Must(strconv.ParseUint(os.Getenv(key), 10, 64)) }
+func MustGetFloat64(key string) float64 { return must.Must(strconv.ParseFloat(os.Getenv(key), 64)) }
 func MustGetString(key string) string {
 	value, ok := os.LookupEnv(key)
 	if !ok {
@@ -21,16 +24,11 @@ func MustGetString(key string) string {
 }
 
 func GetStringWithDefault(key string, fallback string) string {
+	// TODO: use MustBeOk
 	value, ok := os.LookupEnv(key)
 	if !ok {
 		return fallback
 	}
-
-	return value
-}
-
-func MustGetInt(key string) int {
-	value := must.Must(strconv.Atoi(os.Getenv(key)))
 
 	return value
 }
@@ -44,12 +42,6 @@ func GetIntWithDefault(key string, fallback int) int {
 	return value
 }
 
-func MustGetUint(key string) uint {
-	value := must.Must(strconv.ParseUint(os.Getenv(key), 10, 64))
-
-	return uint(value)
-}
-
 func GetUintWithDefault(key string, fallback uint) uint {
 	value, err := strconv.ParseUint(os.Getenv(key), 10, 64)
 	if err != nil {
@@ -59,12 +51,6 @@ func GetUintWithDefault(key string, fallback uint) uint {
 	return uint(value)
 }
 
-func MustGetFloat32(key string) float32 {
-	value := must.Must(strconv.ParseFloat(os.Getenv(key), 32))
-
-	return float32(value)
-}
-
 func GetFloat32WithDefault(key string, fallback float32) float32 {
 	value, err := strconv.ParseFloat(os.Getenv(key), 32)
 	if err != nil {
@@ -72,12 +58,6 @@ func GetFloat32WithDefault(key string, fallback float32) float32 {
 	}
 
 	return float32(value)
-}
-
-func MustGetFloat64(key string) float64 {
-	value := must.Must(strconv.ParseFloat(os.Getenv(key), 64))
-
-	return value
 }
 
 func GetFloat64WithDefault(key string, fallback float64) float64 {

@@ -1,5 +1,11 @@
 package must
 
+import "strings"
+
+const (
+	errMustBeOkString = "must be ok"
+)
+
 func Must[T any](obj T, err error) T {
 	if err != nil {
 		panic(err)
@@ -8,14 +14,14 @@ func Must[T any](obj T, err error) T {
 	return obj
 }
 
-func BeOk[T any](value T, ok bool) T {
+func MustBeOk[T any](value T, ok bool, args ...string) T {
 	if !ok {
-		panic("must be ok")
+		panic(errMustBeOkString + " " + strings.Join(args, " "))
 	}
 	return value
 }
 
-func NotBeOk[T any](value T, ok bool) T {
+func MustNotBeOk[T any](value T, ok bool) T {
 	if ok {
 		panic("must not be ok")
 	}

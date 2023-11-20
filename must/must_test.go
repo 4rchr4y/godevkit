@@ -37,13 +37,13 @@ func TestMust(t *testing.T) {
 func TestBeOk(t *testing.T) {
 	t.Run("valid: true boolean input", func(t *testing.T) {
 		assert.NotPanics(t, func() {
-			BeOk("valid string", true)
+			MustBeOk("valid string", true)
 		})
 	})
 
 	t.Run("invalid: false boolean input", func(t *testing.T) {
 		assert.Panics(t, func() {
-			BeOk("valid string", false)
+			MustBeOk("valid string", false)
 		})
 	})
 }
@@ -51,13 +51,13 @@ func TestBeOk(t *testing.T) {
 func TestNotBeOk(t *testing.T) {
 	t.Run("valid: false boolean input", func(t *testing.T) {
 		assert.NotPanics(t, func() {
-			NotBeOk("valid string", false)
+			MustNotBeOk("valid string", false)
 		})
 	})
 
 	t.Run("invalid: true boolean input", func(t *testing.T) {
 		assert.Panics(t, func() {
-			NotBeOk("valid string", true)
+			MustNotBeOk("valid string", true)
 		})
 	})
 }

@@ -10,6 +10,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestMustGetInt2(t *testing.T) {
+	t.Run("valid", func(t *testing.T) {
+		os.Setenv("TEST_VALID_INT", "10")
+		defer os.Unsetenv("TEST_VALID_INT")
+
+		assert.Equal(t, 10, MustGetInt("TEST_VALID_INT"))
+	})
+
+	t.Run("invalid", func(t *testing.T) {
+		assert.Panics(t, func() { MustGetInt("TEST_VALID_INT") })
+	})
+}
+
 func TestMustGetString(t *testing.T) {
 	t.Run("valid: valid env variable", func(t *testing.T) {
 		os.Setenv("TEST_VALID_STRING", "test string")
@@ -430,78 +443,6 @@ func TestGetUintWithDefault(t *testing.T) {
 		value := GetUintWithDefault("TEST_INVALID_UINT", 10)
 
 		assert.Equal(t, uint(10), value)
-	})
-}
-
-func TestMustGetFloat32(t *testing.T) {
-
-	t.Run("valid: valid input", func(t *testing.T) {
-		os.Setenv("TEST_VALID_FLOAT32", "10")
-		defer os.Unsetenv("TEST_VALID_FLOAT32")
-
-		value := MustGetFloat32("TEST_VALID_FLOAT32")
-
-		assert.Equal(t, float32(10.0), value)
-	})
-
-	t.Run("valid: integer value with leading zeros", func(t *testing.T) {
-		os.Setenv("TEST_VALID_FLOAT32", "007")
-		defer os.Unsetenv("TEST_VALID_FLOAT32")
-
-		value := MustGetFloat32("TEST_VALID_FLOAT32")
-
-		assert.Equal(t, float32(7.0), value)
-	})
-
-	t.Run("valid: negative integer value", func(t *testing.T) {
-		os.Setenv("TEST_VALID_FLOAT32", "-7")
-		defer os.Unsetenv("TEST_VALID_FLOAT32")
-
-		value := MustGetFloat32("TEST_VALID_FLOAT32")
-
-		assert.Equal(t, float32(-7.0), value)
-	})
-
-	t.Run("valid: large integer value", func(t *testing.T) {
-		os.Setenv("TEST_VALID_FLOAT32", strconv.FormatFloat(math.MaxFloat32, 'f', -1, 64))
-		defer os.Unsetenv("TEST_VALID_FLOAT32")
-
-		value := MustGetFloat32("TEST_VALID_FLOAT32")
-
-		assert.Equal(t, float32(math.MaxFloat32), value)
-	})
-
-	t.Run("invalid: value is string", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "not_a_float32")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_INVALID_FLOAT32")
-		})
-	})
-
-	t.Run("invalid: special char in value", func(t *testing.T) {
-		os.Setenv("TEST_INVALID_FLOAT32", "10!@")
-		defer os.Unsetenv("TEST_INVALID_FLOAT32")
-
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_INVALID_FLOAT32")
-		})
-	})
-
-	t.Run("invalid: env key is not set", func(t *testing.T) {
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_NONEXISTENT_KEY")
-		})
-	})
-
-	t.Run("invalid: invalid env key", func(t *testing.T) {
-		os.Setenv("TEST_VALID_FLOAT32", "10")
-		defer os.Unsetenv("TEST_VALID_FLOAT32")
-
-		assert.Panics(t, func() {
-			MustGetFloat32("TEST_WRONG_KEY")
-		})
 	})
 }
 
