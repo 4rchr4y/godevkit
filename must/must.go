@@ -15,7 +15,7 @@ func MustBeOk[T any](value T, ok bool, args ...error) T {
 }
 
 func MustNotBeOk[T any](value T, ok bool, args ...error) T {
-	return assertCondition(value, ok, "value must not be ok", args...)
+	return assertCondition(value, !ok, "value must not be ok", args...)
 }
 
 func assertCondition[T any](value T, condition bool, defaultMsg string, args ...error) T {
