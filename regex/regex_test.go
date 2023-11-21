@@ -44,4 +44,30 @@ func TestUrlPattern(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
+	t.Run("invalid: random letters as a value", func(t *testing.T) {
+		url := "abcdef"
+
+		matched, err := regexp.MatchString(UrlPatternString, url)
+
+		assert.False(t, matched)
+		assert.NoError(t, err)
+	})
+
+	t.Run("invalid: invalid url", func(t *testing.T) {
+		url := "https://this-shouldn't.match@example.com"
+
+		matched, err := regexp.MatchString(UrlPatternString, url)
+
+		assert.False(t, matched)
+		assert.NoError(t, err)
+	})
+
+	t.Run("invalid: invalid url", func(t *testing.T) {
+		url := "www.whatever.com"
+
+		matched, err := regexp.MatchString(UrlPatternString, url)
+
+		assert.False(t, matched)
+		assert.NoError(t, err)
+	})
 }
