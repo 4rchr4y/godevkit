@@ -24,9 +24,9 @@ func MustNotBeOk[T any](value T, ok bool, args ...error) T {
 	return value
 }
 
-func BuildErrorMessage(defaultError string, args []error) string {
+func BuildErrorMessage(defaultErrorMessage string, args []error) string {
 	if len(args) == 0 {
-		return defaultError
+		return defaultErrorMessage
 	}
 
 	var sb strings.Builder
