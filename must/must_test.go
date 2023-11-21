@@ -46,6 +46,18 @@ func TestBeOk(t *testing.T) {
 			MustBeOk("valid string", false)
 		})
 	})
+
+	t.Run("invalid: with error", func(t *testing.T) {
+		assert.PanicsWithValue(t, "error message", func() {
+			MustBeOk("valid string", false, errors.New("error message"))
+		})
+	})
+
+	t.Run("invalid: more than 1 error", func(t *testing.T) {
+		assert.PanicsWithValue(t, "error message; second error message", func() {
+			MustBeOk("valid string", false, errors.New("error message"), errors.New("second error message"))
+		})
+	})
 }
 
 func TestNotBeOk(t *testing.T) {
@@ -58,6 +70,18 @@ func TestNotBeOk(t *testing.T) {
 	t.Run("invalid: true boolean input", func(t *testing.T) {
 		assert.Panics(t, func() {
 			MustNotBeOk("valid string", true)
+		})
+	})
+
+	t.Run("invalid: with error", func(t *testing.T) {
+		assert.PanicsWithValue(t, "error message", func() {
+			MustNotBeOk("valid string", true, errors.New("error message"))
+		})
+	})
+
+	t.Run("invalid: more than 1 error", func(t *testing.T) {
+		assert.PanicsWithValue(t, "error message; second error message", func() {
+			MustNotBeOk("valid string", true, errors.New("error message"), errors.New("second error message"))
 		})
 	})
 }
