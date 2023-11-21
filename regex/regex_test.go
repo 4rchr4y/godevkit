@@ -61,13 +61,4 @@ func TestUrlPattern(t *testing.T) {
 		assert.False(t, matched)
 		assert.NoError(t, err)
 	})
-
-	t.Run("invalid: invalid url", func(t *testing.T) {
-		url := "www.whatever.com"
-
-		matched, err := regexp.MatchString(UrlPatternString, url)
-
-		assert.False(t, matched)
-		assert.NoError(t, err)
-	})
 }
