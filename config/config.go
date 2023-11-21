@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/4rchr4y/gdk/must"
+	"github.com/4rchr4y/gdk/regex"
 )
 
 func requireEnvVar(key string) (string, error) {
@@ -35,56 +36,55 @@ func MustGetString(key string) string   { return must.Must(requireEnvVar(key)) }
 // 	return value
 // }
 
-func GetStringWithDefault(key string, fallback string) string {
+func GetStringWithDefault(key string, defaultValue string) string {
 	// TODO: use MustBeOk
 	value, ok := os.LookupEnv(key)
 	if !ok {
-		return fallback
+		return defaultValue
 	}
 
 	return value
 }
 
-func GetIntWithDefault(key string, fallback int) int {
+func GetIntWithDefault(key string, defaultValue int) int {
 	value, err := strconv.Atoi(os.Getenv(key))
 	if err != nil {
-		return fallback
+		return defaultValue
 	}
 
 	return value
 }
 
-func GetUintWithDefault(key string, fallback uint) uint {
+func GetUintWithDefault(key string, defaultValue uint) uint {
 	value, err := strconv.ParseUint(os.Getenv(key), 10, 64)
 	if err != nil {
-		return fallback
+		return defaultValue
 	}
 
 	return uint(value)
 }
 
-func GetFloat32WithDefault(key string, fallback float32) float32 {
+func GetFloat32WithDefault(key string, defaultValue float32) float32 {
 	value, err := strconv.ParseFloat(os.Getenv(key), 32)
 	if err != nil {
-		return fallback
+		return defaultValue
 	}
 
 	return float32(value)
 }
 
-func GetFloat64WithDefault(key string, fallback float64) float64 {
+func GetFloat64WithDefault(key string, defaultValue float64) float64 {
 	value, err := strconv.ParseFloat(os.Getenv(key), 64)
 	if err != nil {
-		return fallback
+		return defaultValue
 	}
 
 	return value
 }
 
 func MustGetUrl(key string) string {
-	pattern := `^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/|\/|\/\/)?[A-z0-9_-]*?[:]?[A-z0-9_-]*?[@]?[A-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$`
 	value := os.Getenv(key)
-	matched, err := regexp.MatchString(pattern, value)
+	matched, err := regexp.MatchString(regex.UrlPatternString, value)
 	if !matched {
 		err := fmt.Errorf("environment variable '%s' by key '%s' is not matching URL pattern", value, key)
 		panic(err)
@@ -95,13 +95,12 @@ func MustGetUrl(key string) string {
 	return value
 }
 
-func GetUrlWithDefault(key string, fallback string) string {
-	pattern := `^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/|\/|\/\/)?[A-z0-9_-]*?[:]?[A-z0-9_-]*?[@]?[A-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$`
+func GetUrlWithDefault(key string, defaultValue string) string {
 
 	value := os.Getenv(key)
-	matched, err := regexp.MatchString(pattern, value)
+	matched, err := regexp.MatchString(regex.UrlPatternString, value)
 	if err != nil || !matched {
-		return fallback
+		return defaultValue
 	}
 
 	return value
@@ -114,10 +113,10 @@ func MustGetDuration(key string) time.Duration {
 	return value
 }
 
-func GetDurationWithDefault(key string, fallback time.Duration) time.Duration {
+func GetDurationWithDefault(key string, defaultValue time.Duration) time.Duration {
 	value, err := time.ParseDuration(os.Getenv(key))
 	if err != nil {
-		return fallback
+		return defaultValue
 	}
 
 	return value
