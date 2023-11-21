@@ -1,8 +1,6 @@
 package must
 
-const (
-	errMustBeOkString = "must be ok"
-)
+import "strings"
 
 func Must[T any](obj T, err error) T {
 	if err != nil {
@@ -14,14 +12,30 @@ func Must[T any](obj T, err error) T {
 
 func MustBeOk[T any](value T, ok bool, args ...error) T {
 	if !ok {
-		panic("")
+		panic(BuildErrorMessage("must be ok", args))
 	}
 	return value
 }
 
 func MustNotBeOk[T any](value T, ok bool, args ...error) T {
 	if ok {
-		panic("must not be ok")
+		panic(BuildErrorMessage("must not be ok", args))
 	}
 	return value
+}
+
+func BuildErrorMessage(defaultError string, args []error) string {
+	if len(args) == 0 {
+		return defaultError
+	}
+
+	var sb strings.Builder
+	for i, err := range args {
+		sb.WriteString(err.Error())
+		if len(args) > 1 && len(args)-1 != i {
+			sb.WriteString("; ")
+		}
+	}
+
+	return sb.String()
 }
