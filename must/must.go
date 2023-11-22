@@ -11,20 +11,22 @@ func Must[T any](obj T, err error) T {
 }
 
 func MustBeOk[T any](value T, ok bool, args ...error) T {
-	if !ok {
-		panic(BuildErrorMessage("must be ok", args))
-	}
-	return value
+	return assertCondition(value, ok, "value must be ok", args...)
 }
 
 func MustNotBeOk[T any](value T, ok bool, args ...error) T {
-	if ok {
-		panic(BuildErrorMessage("must not be ok", args))
+	return assertCondition(value, !ok, "value must not be ok", args...)
+}
+
+func assertCondition[T any](value T, condition bool, defaultMsg string, args ...error) T {
+	if !condition {
+		panic(buildErrorMessage(defaultMsg, args...))
 	}
+
 	return value
 }
 
-func BuildErrorMessage(defaultErrorMessage string, args []error) string {
+func buildErrorMessage(defaultErrorMessage string, args ...error) string {
 	if len(args) == 0 {
 		return defaultErrorMessage
 	}

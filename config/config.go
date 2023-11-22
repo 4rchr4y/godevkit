@@ -17,10 +17,14 @@ func MustGetString(key string) string          { return must.MustBeOk(os.LookupE
 func MustGetDuration(key string) time.Duration { return must.Must(time.ParseDuration(os.Getenv(key))) }
 func MustGetUrl(key string) string {
 	value := must.MustBeOk[string](os.LookupEnv(key))
+	matched, err := regexp.MatchString(regex.UrlPatternString, value)
+	value = must.Must[string](value, err)
 
-	matched, _ := regexp.MatchString(regex.UrlPatternString, value)
+	if !matched {
+		panic("env " + key + " with value '" + value + "' is not matching url pattern")
+	}
 
-	return must.MustBeOk[string](value, matched)
+	return value
 }
 
 func GetIntWithDefault(key string, defaultValue int) int {
