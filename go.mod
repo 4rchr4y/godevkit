@@ -1,4 +1,4 @@
-module github.com/4rchr4y/gdk
+module github.com/4rchr4y/godevkit
 
 go 1.21
 
