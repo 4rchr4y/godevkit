@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/4rchr4y/gdk/must"
-	"github.com/4rchr4y/gdk/regex"
+	"github.com/4rchr4y/godevkit/must"
+	"github.com/4rchr4y/godevkit/regex"
 )
 
 func MustGetInt(key string) int                { return must.Must(strconv.Atoi(os.Getenv(key))) }
