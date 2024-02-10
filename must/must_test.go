@@ -35,6 +35,7 @@ func TestMust(t *testing.T) {
 }
 
 func TestBeOk(t *testing.T) {
+
 	t.Run("valid: true boolean input", func(t *testing.T) {
 		assert.NotPanics(t, func() {
 			MustBeOk("valid string", true)
