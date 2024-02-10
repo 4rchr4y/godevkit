@@ -16,7 +16,7 @@ type OSWrapper interface {
 
 	Getwd() (dir string, err error)
 	UserHomeDir() (string, error)
-
+	Exists(path string) (bool, error)
 	Walk(root string, fn filepath.WalkFunc) error
 	Mkdir(name string, perm fs.FileMode) error
 	MkdirAll(path string, perm fs.FileMode) error
