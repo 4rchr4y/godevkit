@@ -67,6 +67,23 @@ func (OSWrap) Walk(root string, fn filepath.WalkFunc) error {
 	return filepath.Walk(root, fn)
 }
 
+func (OSWrap) WalkDir(root string, fn fs.WalkDirFunc) error {
+	return filepath.WalkDir(root, fn)
+}
+
 func (OSWrap) Getwd() (dir string, err error) {
 	return os.Getwd()
+}
+
+func (osw OSWrap) Exists(path string) (bool, error) {
+	_, err := osw.StatFile(path)
+	if err == nil {
+		return true, nil
+	}
+
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return false, err
 }
