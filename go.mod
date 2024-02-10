@@ -1,4 +1,4 @@
-module github.com/4rchr4y/godevkit/v2
+module github.com/4rchr4y/godevkit/v3
 
 go 1.21
 

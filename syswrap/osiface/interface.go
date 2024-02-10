@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/4rchr4y/godevkit/v2/syswrap"
+	"github.com/4rchr4y/godevkit/v3/syswrap"
 )
 
 type OSWrapper interface {
