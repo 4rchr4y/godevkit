@@ -3,7 +3,7 @@ package ioiface
 import (
 	"io"
 
-	"github.com/4rchr4y/godevkit/syswrap"
+	"github.com/4rchr4y/godevkit/v2/syswrap"
 )
 
 type IOWrapper interface {

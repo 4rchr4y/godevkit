@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/4rchr4y/godevkit/must"
-	"github.com/4rchr4y/godevkit/regex"
+	"github.com/4rchr4y/godevkit/v2/must"
+	"github.com/4rchr4y/godevkit/v2/regex"
 )
 
 func MustGetString(key string) string {
