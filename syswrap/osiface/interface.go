@@ -16,16 +16,26 @@ type OSWrapper interface {
 
 	Getwd() (dir string, err error)
 	UserHomeDir() (string, error)
-	Exists(path string) (bool, error)
+
+	Rename(oldpath string, newpath string) error
 	Walk(root string, fn filepath.WalkFunc) error
 	Mkdir(name string, perm fs.FileMode) error
 	MkdirAll(path string, perm fs.FileMode) error
 
 	CreateFile(name string) (*os.File, error)
+	DeleteFile(filename string) error
 	OpenFile(name string) (*os.File, error)
 	ReadFile(name string) ([]byte, error)
 	WriteFile(name string, data []byte, perm fs.FileMode) error
-	StatFile(name string) (fs.FileInfo, error)
+	MoveFile(source string, target string) error
+
+	Stat(name string) (fs.FileInfo, error)
+	Lstat(path string) (fs.FileInfo, error)
+
+	Exists(path string) (bool, error)
+	DirExists(path string) bool
+	FileExists(path string) bool
+	DirIsEmpty(dir string) (bool, error)
 
 	ReadGzip(reader io.Reader) (*gzip.Reader, error)
 	WriteGzip(writer io.Writer) *gzip.Writer
