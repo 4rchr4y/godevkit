@@ -27,6 +27,15 @@ func TestUrlPattern(t *testing.T) {
 	})
 
 	t.Run("valid: valid url", func(t *testing.T) {
+		url := "github.com/orgs/4rchr4y"
+
+		matched, err := regexp.MatchString(UrlPatternString, url)
+
+		assert.True(t, matched)
+		assert.NoError(t, err)
+	})
+
+	t.Run("valid: valid url", func(t *testing.T) {
 		url := "https://github.com/orgs/4rchr4y/repositories?type=source"
 
 		matched, err := regexp.MatchString(UrlPatternString, url)
